@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+$phone:"(max-width: 767px)";
+$tablet:"(min-width: 768px) and (max-width: 1023px)";
+
+body{
+    background-color: #D7CEB2;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.container {
+    background-image: url("../img/trees-3619180_1920.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100em;
+    width: 80%;
+    margin: auto;
+    border: 1px solid red;
+    @media #{$tablet}, #{$phone} {
+        height: -webkit-fill-available;
+    }
+}
+
+#yours {
+    text-align: center;
+    color: #E3E4DB;
+    font-family: 'Indie Flower';
+    margin: 20px;
+    font-size: 7vw;
+}
+.nav {
+    text-align: center;
+    
+}
+
+li {
+    list-style: none;
+    float: left;
+    border: 5px solid #55505C;
+    margin: 5%;
+    padding: 5%;
+    width: 18vw;
+    height: 15vw;
+    position: relative;
+    @media #{$tablet},#{$phone}{
+        float: none;
+        margin: auto;
+        width: 35vw;
+        height: 25vh;
+    }
+    
+}
+
+
+li > button,input {
+    display: block;
+    margin-top: 3%;
+}
+
+a {
+    text-decoration-line: none;
+    color: #E3E4DB;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    height: 20%;
+    border: none;
+    background-color: #55505C;
+    color: #E3E4DB;
+    position: absolute;
+    bottom: 30px;
+    left: 0px;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+}
+
+#map {
+    border: 1px solid #2D2D2A;
+    color: white;
+    background-color: #55505C;
+    width: 400px;
+    height: 300px;
+    margin: 45px auto;
+    padding: 6% 12%;
+    text-align: center;
+    font-size: 35px;
+    font-family: 'Quicksand', sans-serif;
+    display: none;
+    
+    @media #{$tablet},#{$phone}{
+        float: none;
+        margin: auto;
+        width: 35vw;
+        height: 25vh;
+    }
+ }
