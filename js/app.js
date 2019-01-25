@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var show = $(".show");
     var input =$("input");
     var search = $("#search");
-    var loc = 'http://apidev.accuweather.com/locations/v1/search?q='
+    var loc = 'https://apidev.accuweather.com/locations/v1/search?q='
     var key = '&apikey=hoArfRosT1215';
     var map = $("#map");
     var geo = navigator.geolocation;
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function(){
     function getLocation(location){
         location.forEach(function(info){
             let city_key = info.Key;
-            let new_url = 'http://apidev.accuweather.com/currentconditions/v1/'+city_key+json_key;
+            let new_url = 'https://apidev.accuweather.com/currentconditions/v1/'+city_key+json_key;
             console.log(new_url);
             
             //get current condition
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function(){
     function clinetLocCurr(location){
             let curr_key = location.Key;
             let curr_city = location.LocalizedName;
-            let curr_url = "http://apidev.accuweather.com/currentconditions/v1/"+curr_key+json_key;
+            let curr_url = "https://apidev.accuweather.com/currentconditions/v1/"+curr_key+json_key;
 
             console.log(curr_url);
             //current weather
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function(){
         function clinetLocDaily(location){
             let curr_key = location.Key;
             let curr_city = location.LocalizedName;
-            let curr_url = "http://apidev.accuweather.com/daily-weather-forecast/v1/"+curr_key+json_key;
+            let curr_url = "https://apidev.accuweather.com/pl/pl/"+curr_city+"/"+curr_key+"/daily-weather-forecast/"+curr_key;
 
             console.log(curr_url);
 
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function(){
             geo.getCurrentPosition(function(location) {
                 let lati = location.coords.latitude;
                 let longi = location.coords.longitude;
-                let url_w2 = "http://apidev.accuweather.com/locations/v1/cities/geoposition/search.json?q="+lati+","+longi+key;
+                let url_w2 = "https://apidev.accuweather.com/locations/v1/cities/geoposition/search.json?q="+lati+","+longi+key;
                     
                 $.ajax({
                     url: url_w2,
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function(){
             geo.getCurrentPosition(function(location) {
                 let lati = location.coords.latitude;
                 let longi = location.coords.longitude;
-                let url_w3 = "http://apidev.accuweather.com/locations/v1/cities/geoposition/search.json?q="+lati+","+longi+key;
+                let url_w3 = "https://apidev.accuweather.com/locations/v1/cities/geoposition/search.json?q="+lati+","+longi+key;
                     
                 $.ajax({
                     url: url_w3,
@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 }).done(function(response){
                     console.log(response.Key);
                     map.css("display","-webkit-box");
+
                     clinetLocDaily(response);
                 }).fail(function(error){
                     console.log("nok");
