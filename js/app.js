@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function(){
             //get current condition
             function getWeather(){
                 $.ajax({
-                    url: new_url
+                    url: new_url,
+                    method: 'GET',
+                    dataType: 'json'
                 }).done(function(response){
                     response.forEach(function(info){
                         console.log(info.WeatherText);
@@ -36,12 +38,55 @@ document.addEventListener('DOMContentLoaded', function(){
     };
 
     //get client's cuurent condition
-    function clinetLocation(location){
-        location.forEach(function(info){
+    function clinetLocCurr(location){
+            let curr_key = location.Key;
+            let curr_city = location.LocalizedName;
             let curr_url = "http://apidev.accuweather.com/currentconditions/v1/"+curr_key+json_key;
-            let curr_key = info.Key;
+
             console.log(curr_url);
-        });
+            //current weather
+            function currWeather(){
+                $.ajax({
+                    url : curr_url,
+                    method: 'GET',
+                    dataType: 'json'
+                }).done(function(response){
+                    response.forEach(function(info){
+                        console.log(info.WeatherText);
+                        console.log(info.Temperature.Metric.Value +"°"+ info.Temperature.Metric.Unit);
+                        map.text(curr_city+": "+info.Temperature.Metric.Value +"°"+ info.Temperature.Metric.Unit +" " +info.WeatherText);
+                    });
+                }).fail(function(response){
+                    console.log(response);
+                })
+            };
+            currWeather();
+
+    };
+
+
+        //get client's cuurent condition
+        function clinetLocDaily(location){
+            let curr_key = location.Key;
+            let curr_city = location.LocalizedName;
+            let curr_url = "http://apidev.accuweather.com/daily-weather-forecast/v1/"+curr_key+json_key;
+
+            console.log(curr_url);
+
+            //daily weather
+            function currWeather(){
+                $.ajax({
+                    url : curr_url,
+                    method: 'GET',
+                    dataType: 'json'
+                }).done(function(response){
+                    console.log(response);
+                }).fail(function(response){
+                    console.log(response);
+                })
+            };
+            currWeather();
+
     };
 
 
@@ -77,9 +122,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     method: 'GET',
                     dataType: 'json'
                 }).done(function(response){
-                    console.log(response);
-                    clinetLocation(response);
-                    
+                    console.log("ok");
+                    map.css("display","-webkit-box");
+                    clinetLocCurr(response);
                 }).fail(function(error){
                     console.log("nok");
                 });
@@ -92,20 +137,27 @@ document.addEventListener('DOMContentLoaded', function(){
     //window3
     let periot = $("#periot");
     periot.on("click", function(e){
-        let url_w3 = "http://apidev.accuweather.com/locations/v1/cities/geoposition/search.json?q=50.0970996,18.9866509&apikey=hoArfRosT1215";
-        $.ajax({
-            url: url_w3,
-            method: 'GET',
-            dataType: 'json'
-        }).done(function(response){
-            map.css("display","-webkit-box");
-            clinetLocation();
-            console.log(response);
-        }).fail(function(error){
-            console.log("nok");
-        });
-        // show.css("background-color","pink").toggle();
-        map.css("display","block");
+        
+        if(geo) {
+            geo.getCurrentPosition(function(location) {
+                let lati = location.coords.latitude;
+                let longi = location.coords.longitude;
+                let url_w3 = "http://apidev.accuweather.com/locations/v1/cities/geoposition/search.json?q="+lati+","+longi+key;
+                    
+                $.ajax({
+                    url: url_w3,
+                    method: 'GET',
+                    dataType: 'json'
+                }).done(function(response){
+                    console.log(response.Key);
+                    map.css("display","-webkit-box");
+                    clinetLocDaily(response);
+                }).fail(function(error){
+                    console.log("nok");
+                });
+            })
+        } else {
+            console.log('niedostępny');
+        };
     });
-
 });
